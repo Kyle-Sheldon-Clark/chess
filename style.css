@@ -1,0 +1,17 @@
+#board {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 82vh;
+}
+
+.row {
+    display: flex;
+}
+
+.square {
+    width: 10vh;
+    height: 10vh;
+    border: 1px solid black;
+}

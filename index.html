@@ -11,5 +11,29 @@
     <div id="board">
 
     </div>
+    <script>
+        function createBoard() {
+            let blackSquare = false;
+            for (let i = 0; i < 8; i++) {
+                let row = document.createElement('div');
+                row.classList.add('row');
+                for (let j = 0; j < 8; j++) {
+                    let square = document.createElement('div');
+                    square.classList.add('square');
+                    square.setAttribute('id', `${i}-${j}`);
+                    if (blackSquare) {
+                        square.style.backgroundColor = 'grey';
+                        blackSquare = false;
+                    } else {
+                        blackSquare = true;
+                    }
+                    row.appendChild(square);
+                }
+                blackSquare = !blackSquare;
+                document.getElementById('board').appendChild(row);
+            }
+        }
+        createBoard();
+    </script>
 </body>
 </html>
