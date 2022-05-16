@@ -27,6 +27,14 @@
                     } else {
                         blackSquare = true;
                     }
+                    if (i === 1) {
+                        square.classList.add('blackPawn');
+                        square.innerText = 'p';
+                    }
+                    if (i === 6) {
+                        square.classList.add('whitePawn');
+                        square.innerText = 'p';
+                    }
                     row.appendChild(square);
                 }
                 blackSquare = !blackSquare;
