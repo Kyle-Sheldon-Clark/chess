@@ -12,6 +12,10 @@
 
     </div>
     <script>
+        let pieceToMove;
+        let pieceToMoveColor;
+        let squareText = '';
+
         function createBoard() {
             let blackSquare = false;
             for (let i = 0; i < 8; i++) {
@@ -21,6 +25,9 @@
                     let square = document.createElement('div');
                     square.classList.add('square');
                     square.setAttribute('id', `${i}-${j}`);
+                    square.addEventListener('click', function() {
+                        handleClick(square);
+                    });
                     if (blackSquare) {
                         square.style.backgroundColor = 'grey';
                         blackSquare = false;
@@ -49,15 +56,71 @@
                     } else if ((i === 0 || i === 7) && j === 4)  {
                         square.classList.add('king');
                         square.innerText = 'K';
-                    }
-                    if (i === 1 || i === 6) {
+                    } else if (i === 1 || i === 6) {
                         square.classList.add('pawn');
                         square.innerText = 'p';
+                    } else {
+                        square.classList.add('emptySquare');
                     }
                     row.appendChild(square);
                 }
                 blackSquare = !blackSquare;
                 document.getElementById('board').appendChild(row);
+            }
+        }
+
+        function handleClick(square) {
+            
+            if (square.classList.contains('emptySquare')) {
+                square.classList.remove('emptySquare');
+                square.classList.add(pieceToMove);
+                square.classList.add(pieceToMoveColor);
+                square.innerText = squareText;
+                pieceToMove = '';
+                pieceToMoveColor = '';
+                squareText = '';
+            } else {
+                if (square.classList.contains('whitePiece')) {
+                    square.classList.add('emptySquare');
+                    square.classList.remove('whitePiece');
+                    pieceToMoveColor = 'whitePiece';
+                } else if (square.classList.contains('blackPiece')) {
+                    square.classList.add('emptySquare');
+                    square.classList.remove('blackPiece');
+                    pieceToMoveColor = 'blackPiece';
+                }
+
+                if (square.classList.contains('rook')) {
+                    square.classList.remove('rook');
+                    squareText = square.innerText;
+                    square.innerText = '';
+                    pieceToMove = 'rook';
+                } else if (square.classList.contains('knight')) {
+                    square.classList.remove('knight');
+                    squareText = square.innerText;
+                    square.innerText = '';
+                    pieceToMove = 'knight';
+                } else if (square.classList.contains('bishop')) {
+                    square.classList.remove('bishop');
+                    squareText = square.innerText;
+                    square.innerText = '';
+                    pieceToMove = 'bishop';
+                } else if (square.classList.contains('queen')) {
+                    square.classList.remove('queen');
+                    squareText = square.innerText;
+                    square.innerText = '';
+                    pieceToMove = 'queen';
+                } else if (square.classList.contains('king')) {
+                    square.classList.remove('king');
+                    squareText = square.innerText;
+                    square.innerText = '';
+                    pieceToMove = 'king';
+                } else if (square.classList.contains('pawn')) {
+                    square.classList.remove('pawn');
+                    squareText = square.innerText;
+                    square.innerText = '';
+                    pieceToMove = 'pawn';
+                }
             }
         }
         createBoard();
