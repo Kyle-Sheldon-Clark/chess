@@ -16,6 +16,7 @@
         let pieceToMoveColor;
         let squareText = '';
         let turn = 'white';
+        let originalSquare;
 
         function createBoard() {
             let blackSquare = false;
@@ -72,8 +73,7 @@
 
         function handleClick(square) {
             
-            if (square.classList.contains('emptySquare')) {
-                square.classList.remove('emptySquare');
+            if (pieceToMove === 'pawn' && validPawnMove(square)) {
                 square.classList.add(pieceToMove);
                 square.classList.add(pieceToMoveColor);
                 square.innerText = squareText;
@@ -128,6 +128,26 @@
                     squareText = square.innerText;
                     square.innerText = '';
                     pieceToMove = 'pawn';
+                    originalSquare = square.id;
+                }
+            }
+        }
+
+        function validPawnMove(squareToCheck) {
+            let originalSquareId = originalSquare.split('-');
+            let originalSquareRow = parseInt(originalSquareId[0]);
+            let originalSquareColumn = parseInt(originalSquareId[1]);
+            
+            let squareToCheckId = squareToCheck.id.split('-');
+            let squareToCheckRow = parseInt(squareToCheckId[0]);
+            let squareToCheckColumn = parseInt(squareToCheckId[1]);
+            if (turn === 'white') {
+                if (originalSquareRow - squareToCheckRow === 1) {
+                    return true;
+                }
+            } else {
+                if (squareToCheckRow === (originalSquareRow + 1)) {
+                    return true;
                 }
             }
         }
