@@ -15,6 +15,7 @@
         let pieceToMove;
         let pieceToMoveColor;
         let squareText = '';
+        let turn = 'white';
 
         function createBoard() {
             let blackSquare = false;
@@ -79,15 +80,22 @@
                 pieceToMove = '';
                 pieceToMoveColor = '';
                 squareText = '';
+                if (turn === 'white') {
+                    turn = 'black';
+                } else {
+                    turn = 'white';
+                }
             } else {
-                if (square.classList.contains('whitePiece')) {
+                if (square.classList.contains('whitePiece') && turn === 'white') {
                     square.classList.add('emptySquare');
                     square.classList.remove('whitePiece');
                     pieceToMoveColor = 'whitePiece';
-                } else if (square.classList.contains('blackPiece')) {
+                } else if (square.classList.contains('blackPiece') && turn === 'black') {
                     square.classList.add('emptySquare');
                     square.classList.remove('blackPiece');
                     pieceToMoveColor = 'blackPiece';
+                } else {
+                    return;
                 }
 
                 if (square.classList.contains('rook')) {
