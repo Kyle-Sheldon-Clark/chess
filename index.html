@@ -12,10 +12,13 @@
 
     </div>
     <script>
+        let pieces = [];
+
         let pieceToMove;
         let pieceToMoveColor;
         let squareText = '';
         let turn = 'white';
+        let round = 1;
         let originalSquare;
 
         function createBoard() {
@@ -30,6 +33,9 @@
                     square.addEventListener('click', function() {
                         handleClick(square);
                     });
+                    let pieceColor;
+                    let pieceType;
+                    let piecePosition = square.id;
                     if (blackSquare) {
                         square.style.backgroundColor = 'grey';
                         blackSquare = false;
@@ -39,32 +45,43 @@
 
                     if (i === 0 || i === 1) {
                         square.classList.add('blackPiece');
+                        pieceColor = 'black';
                     } else if (i === 6 || i === 7) {
                         square.classList.add('whitePiece');
+                        pieceColor = 'white';
                     }
 
                     if ((i === 0 || i === 7) && (j === 0 || j === 7))  {
                         square.classList.add('rook');
                         square.innerText = 'R';
+                        pieceType = 'rook';
                     } else if ((i === 0 || i === 7) && (j === 1 || j === 6))  {
                         square.classList.add('knight');
                         square.innerText = 'N';
+                        pieceType = 'knight';
                     } else if ((i === 0 || i === 7) && (j === 2 || j === 5))  {
                         square.classList.add('bishop');
                         square.innerText = 'B';
+                        pieceType = 'bishop';
                     } else if ((i === 0 || i === 7) && j === 3)  {
                         square.classList.add('queen');
                         square.innerText = 'Q';
+                        pieceType = 'queen';
                     } else if ((i === 0 || i === 7) && j === 4)  {
                         square.classList.add('king');
                         square.innerText = 'K';
+                        pieceType = 'king';
                     } else if (i === 1 || i === 6) {
                         square.classList.add('pawn');
                         square.innerText = 'p';
+                        pieceType = 'pawn';
                     } else {
                         square.classList.add('emptySquare');
+                        row.appendChild(square);
+                        continue;
                     }
                     row.appendChild(square);
+                    buildPiece(pieceType, piecePosition, pieceColor);
                 }
                 blackSquare = !blackSquare;
                 document.getElementById('board').appendChild(row);
@@ -84,6 +101,7 @@
                     turn = 'black';
                 } else {
                     turn = 'white';
+                    round++;
                 }
             } else {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
@@ -133,6 +151,16 @@
             }
         }
 
+        function buildPiece(type, position, color) {
+            pieces.push({
+                type: type,
+                position: position,
+                color: color,
+                move: 1,
+                alive: true,
+            })
+        }
+
         function validPawnMove(squareToCheck) {
             let originalSquareId = originalSquare.split('-');
             let originalSquareRow = parseInt(originalSquareId[0]);
@@ -141,6 +169,17 @@
             let squareToCheckId = squareToCheck.id.split('-');
             let squareToCheckRow = parseInt(squareToCheckId[0]);
             let squareToCheckColumn = parseInt(squareToCheckId[1]);
+
+            if (round === 1 && turn === 'white') {
+                if (originalSquareRow - squareToCheckRow <= 2 && originalSquareRow - squareToCheckRow > 0) {
+                    return true;
+                } 
+            } else {
+                if (squareToCheckRow === originalSquareRow + 1 || squareToCheckRow === originalSquareRow + 2) {
+                    return true;
+                }
+            }
+
             if (turn === 'white') {
                 if (originalSquareRow - squareToCheckRow === 1) {
                     return true;
