@@ -91,6 +91,11 @@
         function handleClick(square) {
             
             if (pieceToMove === 'pawn' && validPawnMove(square)) {
+                let pawn = pieces.find(obj => {
+                return obj.position === originalSquare;
+                });
+                pawn.position = square.id;
+                pawn.move++;
                 square.classList.add(pieceToMove);
                 square.classList.add(pieceToMoveColor);
                 square.innerText = squareText;
