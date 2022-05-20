@@ -175,13 +175,13 @@
             let squareToCheckColumn = parseInt(squareToCheckId[1]);
 
             if (pawn.move < 1 && turn === 'white') {
-                if (originalSquareRow - squareToCheckRow <= 2 && originalSquareRow - squareToCheckRow > 0) {
+                if (originalSquareRow - squareToCheckRow <= 2 && originalSquareRow - squareToCheckRow > 0 && originalSquareColumn === squareToCheckColumn) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
                     return true;
                 } 
             } else if (pawn.move < 1 && turn === 'black') {
-                if (squareToCheckRow === originalSquareRow + 1 || squareToCheckRow === originalSquareRow + 2) {
+                if ((squareToCheckRow === originalSquareRow + 1 || squareToCheckRow === originalSquareRow + 2) && originalSquareColumn === squareToCheckColumn) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
                     return true;
@@ -189,13 +189,13 @@
             }
 
             if (turn === 'white') {
-                if (originalSquareRow - squareToCheckRow === 1) {
+                if (originalSquareRow - squareToCheckRow === 1 && originalSquareColumn === squareToCheckColumn) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
                     return true;
                 }
             } else {
-                if (squareToCheckRow === (originalSquareRow + 1)) {
+                if (squareToCheckRow === (originalSquareRow + 1) && originalSquareColumn === squareToCheckColumn) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
                     return true;
