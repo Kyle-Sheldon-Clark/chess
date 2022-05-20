@@ -98,11 +98,13 @@
                 pieceToMove = '';
                 pieceToMoveColor = '';
                 squareText = '';
-                if (turn === 'white') {
-                    turn = 'black';
-                } else {
-                    turn = 'white';
-                    round++;
+                if (originalSquare !== square.id) {
+                    if (turn === 'white') {
+                        turn = 'black';
+                    } else {
+                        turn = 'white';
+                        round++;
+                    }
                 }
             } else {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
