@@ -91,11 +91,6 @@
         function handleClick(square) {
             
             if (pieceToMove === 'pawn' && validPawnMove(square)) {
-                let pawn = pieces.find(obj => {
-                return obj.position === originalSquare;
-                });
-                pawn.position = square.id;
-                pawn.move++;
                 square.classList.add(pieceToMove);
                 square.classList.add(pieceToMoveColor);
                 square.innerText = squareText;
@@ -161,12 +156,16 @@
                 type: type,
                 position: position,
                 color: color,
-                move: 1,
+                move: 0,
                 alive: true,
             })
         }
 
         function validPawnMove(squareToCheck) {
+            let pawn = pieces.find(obj => {
+                return obj.position === originalSquare;
+            });
+
             let originalSquareId = originalSquare.split('-');
             let originalSquareRow = parseInt(originalSquareId[0]);
             let originalSquareColumn = parseInt(originalSquareId[1]);
@@ -175,22 +174,30 @@
             let squareToCheckRow = parseInt(squareToCheckId[0]);
             let squareToCheckColumn = parseInt(squareToCheckId[1]);
 
-            if (round === 1 && turn === 'white') {
+            if (pawn.move < 1 && turn === 'white') {
                 if (originalSquareRow - squareToCheckRow <= 2 && originalSquareRow - squareToCheckRow > 0) {
+                    pawn.position = squareToCheck.id;
+                    pawn.move++;
                     return true;
                 } 
-            } else {
+            } else if (pawn.move < 1 && turn === 'black') {
                 if (squareToCheckRow === originalSquareRow + 1 || squareToCheckRow === originalSquareRow + 2) {
+                    pawn.position = squareToCheck.id;
+                    pawn.move++;
                     return true;
                 }
             }
 
             if (turn === 'white') {
                 if (originalSquareRow - squareToCheckRow === 1) {
+                    pawn.position = squareToCheck.id;
+                    pawn.move++;
                     return true;
                 }
             } else {
                 if (squareToCheckRow === (originalSquareRow + 1)) {
+                    pawn.position = squareToCheck.id;
+                    pawn.move++;
                     return true;
                 }
             }
