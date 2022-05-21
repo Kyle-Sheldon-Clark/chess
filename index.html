@@ -13,6 +13,8 @@
     </div>
     <script>
         let pieces = [];
+        let capturedByBlack = [];
+        let capturedByWhite = [];
 
         let pieceToMove;
         let pieceToMoveColor;
@@ -91,9 +93,7 @@
         function handleClick(square) {
             
             if (pieceToMove === 'pawn' && validPawnMove(square)) {
-                square.classList.remove('emptySquare');
-                square.classList.add(pieceToMove);
-                square.classList.add(pieceToMoveColor);
+                square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
                 square.innerText = squareText;
                 pieceToMove = '';
                 pieceToMoveColor = '';
@@ -177,20 +177,20 @@
             let squareToCheckRow = parseInt(squareToCheckId[0]);
             let squareToCheckColumn = parseInt(squareToCheckId[1]);
 
-            let squareToCheckIsEmpty = document.getElementById(squareToCheck.id).classList.contains('emptySquare');
+            let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
  
             if (originalSquare === squareToCheck.id) {
                 return true;
             }
 
             if (pawn.move < 1 && turn === 'white') {
-                if (originalSquareRow - squareToCheckRow <= 2 && originalSquareRow - squareToCheckRow > 0 && originalSquareColumn === squareToCheckColumn && squareToCheckIsEmpty) {
+                if (originalSquareRow - squareToCheckRow === 2 && originalSquareColumn === squareToCheckColumn && squareToCheckValue.contains('emptySquare')) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
                     return true;
                 } 
             } else if (pawn.move < 1 && turn === 'black') {
-                if ((squareToCheckRow === originalSquareRow + 1 || squareToCheckRow === originalSquareRow + 2) && originalSquareColumn === squareToCheckColumn && squareToCheckIsEmpty) {
+                if (squareToCheckRow === originalSquareRow + 2 && originalSquareColumn === squareToCheckColumn && squareToCheckValue.contains('emptySquare')) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
                     return true;
@@ -198,15 +198,25 @@
             }
 
             if (turn === 'white') {
-                if (originalSquareRow - squareToCheckRow === 1 && originalSquareColumn === squareToCheckColumn && squareToCheckIsEmpty) {
+                if (originalSquareRow - squareToCheckRow === 1 && originalSquareColumn === squareToCheckColumn && squareToCheckValue.contains('emptySquare')) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
                     return true;
-                }
-            } else {
-                if (squareToCheckRow === (originalSquareRow + 1) && originalSquareColumn === squareToCheckColumn && squareToCheckIsEmpty) {
+                } else if (Math.abs(originalSquareColumn - squareToCheckColumn) === 1 && squareToCheckValue.contains('blackPiece')) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
+                    capturedByWhite.push('pawn');
+                    return true;
+                }
+            } else if (turn === 'black') {
+                if (squareToCheckRow === (originalSquareRow + 1) && originalSquareColumn === squareToCheckColumn && squareToCheckValue.contains('emptySquare')) {
+                    pawn.position = squareToCheck.id;
+                    pawn.move++;
+                    return true;
+                } else if (Math.abs(originalSquareColumn - squareToCheckColumn) === 1 && squareToCheckValue.contains('whitePiece')) {
+                    pawn.position = squareToCheck.id;
+                    pawn.move++;
+                    capturedByBlack.push('pawn');
                     return true;
                 }
             }
