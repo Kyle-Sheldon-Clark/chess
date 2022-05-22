@@ -93,19 +93,7 @@
         function handleClick(square) {
             
             if (pieceToMove === 'pawn' && validPawnMove(square)) {
-                square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
-                square.innerText = squareText;
-                pieceToMove = '';
-                pieceToMoveColor = '';
-                squareText = '';
-                if (originalSquare !== square.id) {
-                    if (turn === 'white') {
-                        turn = 'black';
-                    } else {
-                        turn = 'white';
-                        round++;
-                    }
-                }
+                movePiece(square);
             } else if (pieceToMove === '') {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
                     square.classList.add('emptySquare');
@@ -162,6 +150,22 @@
                 move: 0,
                 alive: true,
             })
+        }
+
+        function movePiece(square) {
+            square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
+            square.innerText = squareText;
+            pieceToMove = '';
+            pieceToMoveColor = '';
+            squareText = '';
+            if (originalSquare !== square.id) {
+                if (turn === 'white') {
+                    turn = 'black';
+                } else {
+                    turn = 'white';
+                    round++;
+                }
+            }
         }
 
         function validPawnMove(squareToCheck) {
