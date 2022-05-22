@@ -16,8 +16,8 @@
         let capturedByBlack = [];
         let capturedByWhite = [];
 
-        let pieceToMove;
-        let pieceToMoveColor;
+        let pieceToMove = '';
+        let pieceToMoveColor = '';
         let squareText = '';
         let turn = 'white';
         let round = 1;
@@ -106,7 +106,7 @@
                         round++;
                     }
                 }
-            } else {
+            } else if (pieceToMove === '') {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
                     square.classList.add('emptySquare');
                     square.classList.remove('whitePiece');
