@@ -94,6 +94,8 @@
             
             if (pieceToMove === 'pawn' && validPawnMove(square)) {
                 movePiece(square);
+            } else if (pieceToMove === 'knight' && validKnightMove(square)) {
+                movePiece(square);
             } else if (pieceToMove === '') {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
                     square.classList.add('emptySquare');
@@ -117,6 +119,7 @@
                     squareText = square.innerText;
                     square.innerText = '';
                     pieceToMove = 'knight';
+                    originalSquare = square.id;
                 } else if (square.classList.contains('bishop')) {
                     square.classList.remove('bishop');
                     squareText = square.innerText;
@@ -223,6 +226,26 @@
                     capturedByBlack.push('pawn');
                     return true;
                 }
+            }
+        }
+
+        function validKnightMove(squareToCheck) {
+            let originalSquareId = originalSquare.split('-');
+            let originalSquareRow = parseInt(originalSquareId[0]);
+            let originalSquareColumn = parseInt(originalSquareId[1]);
+            
+            let squareToCheckId = squareToCheck.id.split('-');
+            let squareToCheckRow = parseInt(squareToCheckId[0]);
+            let squareToCheckColumn = parseInt(squareToCheckId[1]);
+
+            if (originalSquare === squareToCheck.id) {
+                return true;
+            }
+
+            if (Math.abs(originalSquareRow - squareToCheckRow) === 2 && Math.abs(originalSquareColumn - squareToCheckColumn) === 1) {
+                return true;
+            } else if (Math.abs(originalSquareRow - squareToCheckRow) === 1 && Math.abs(originalSquareColumn - squareToCheckColumn) === 2) {
+                return true;
             }
         }
         createBoard();
