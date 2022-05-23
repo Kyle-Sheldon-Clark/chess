@@ -238,13 +238,30 @@
             let squareToCheckRow = parseInt(squareToCheckId[0]);
             let squareToCheckColumn = parseInt(squareToCheckId[1]);
 
+            let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
+            if (turn === 'white') {
+                pieceColor = 'whitePiece';
+            } else {
+                pieceColor = 'blackPiece';
+            }
+
             if (originalSquare === squareToCheck.id) {
                 return true;
             }
 
-            if (Math.abs(originalSquareRow - squareToCheckRow) === 2 && Math.abs(originalSquareColumn - squareToCheckColumn) === 1) {
+            if (Math.abs(originalSquareRow - squareToCheckRow) === 2 && Math.abs(originalSquareColumn - squareToCheckColumn) === 1 && !squareToCheckValue.contains(pieceColor)) {
+                if (squareToCheckValue.contains('blackPiece')) {
+                    capturedByWhite.push('knight');
+                } else {
+                    capturedByBlack.push('knight');
+                }
                 return true;
-            } else if (Math.abs(originalSquareRow - squareToCheckRow) === 1 && Math.abs(originalSquareColumn - squareToCheckColumn) === 2) {
+            } else if (Math.abs(originalSquareRow - squareToCheckRow) === 1 && Math.abs(originalSquareColumn - squareToCheckColumn) === 2 && !squareToCheckValue.contains(pieceColor)) {
+                if (squareToCheckValue.contains('blackPiece')) {
+                    capturedByWhite.push('knight');
+                } else {
+                    capturedByBlack.push('knight');
+                }
                 return true;
             }
         }
