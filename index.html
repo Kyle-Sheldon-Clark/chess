@@ -96,6 +96,8 @@
                 movePiece(square);
             } else if (pieceToMove === 'knight' && validKnightMove(square)) {
                 movePiece(square);
+            } else if (pieceToMove === 'rook' && validRookMove(square)) {
+                movePiece(square);
             } else if (pieceToMove === '') {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
                     square.classList.add('emptySquare');
@@ -264,6 +266,18 @@
                 }
                 return true;
             }
+        }
+
+        function validRookMove(squareToCheck) {
+            let originalSquareId = originalSquare.split('-');
+            let originalSquareRow = parseInt(originalSquareId[0]);
+            let originalSquareColumn = parseInt(originalSquareId[1]);
+            
+            let squareToCheckId = squareToCheck.id.split('-');
+            let squareToCheckRow = parseInt(squareToCheckId[0]);
+            let squareToCheckColumn = parseInt(squareToCheckId[1]);
+
+            let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
         }
         createBoard();
     </script>
