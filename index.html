@@ -283,6 +283,9 @@
             if (squareToCheckColumn !== originalSquareColumn && squareToCheckRow !== originalSquareRow) {
                 return false;
             }
+            if (originalSquare === squareToCheck.id) {
+                return true;
+            }
 
             let counter;
             let counterIncrement;
@@ -294,11 +297,31 @@
                     counterIncrement = 1;
                     counter = originalSquareColumn;
                 }
-                while (counter >= squareToCheckColumn) {
+                while (counter !== squareToCheckColumn + counterIncrement) {
                     let currentSquare = document.getElementById(`${originalSquareRow}-${counter}`);
                     if (currentSquare.classList.contains(pieceToMoveColor)) {
                         return false;
                     } else if(!currentSquare.classList.contains('emptySquare') && counter !== squareToCheckColumn) {
+                        return false;
+                    }
+                    counter = counter+counterIncrement;
+                }
+
+                return true;
+            } else {
+                if (originalSquareRow > squareToCheckRow) {
+                    counterIncrement = -1;
+                    counter = originalSquareRow;
+                } else if (originalSquareRow < squareToCheckRow) {
+                    counterIncrement = 1;
+                    counter = originalSquareRow;
+                }
+                 while (counter !== squareToCheckRow + counterIncrement) {
+                    let currentSquare = document.getElementById(`${counter}-${originalSquareRow}`);
+                    if (currentSquare.classList.contains(pieceToMoveColor)) {
+                        console.log(pieceToMoveColor)
+                        return false;
+                    } else if(!currentSquare.classList.contains('emptySquare') && counter !== squareToCheckRow) {
                         return false;
                     }
                     counter = counter+counterIncrement;
