@@ -280,7 +280,30 @@
 
             let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
 
-            if (squareToCheckColumn === originalSquareColumn || squareToCheckRow === originalSquareRow) {
+            if (squareToCheckColumn !== originalSquareColumn && squareToCheckRow !== originalSquareRow) {
+                return false;
+            }
+
+            let counter;
+            let counterIncrement;
+            if (squareToCheckRow === originalSquareRow) {
+                if (originalSquareColumn > squareToCheckColumn) {
+                    counterIncrement = -1;
+                    counter = originalSquareColumn;
+                } else if (originalSquareColumn < squareToCheckColumn) {
+                    counterIncrement = 1;
+                    counter = originalSquareColumn;
+                }
+                while (counter >= squareToCheckColumn) {
+                    let currentSquare = document.getElementById(`${originalSquareRow}-${counter}`);
+                    if (currentSquare.classList.contains(pieceToMoveColor)) {
+                        return false;
+                    } else if(!currentSquare.classList.contains('emptySquare') && counter !== squareToCheckColumn) {
+                        return false;
+                    }
+                    counter = counter+counterIncrement;
+                }
+
                 return true;
             }
         }
