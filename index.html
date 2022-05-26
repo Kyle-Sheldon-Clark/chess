@@ -317,9 +317,8 @@
                     counter = originalSquareRow;
                 }
                  while (counter !== squareToCheckRow + counterIncrement) {
-                    let currentSquare = document.getElementById(`${counter}-${originalSquareRow}`);
+                    let currentSquare = document.getElementById(`${counter}-${originalSquareColumn}`);
                     if (currentSquare.classList.contains(pieceToMoveColor)) {
-                        console.log(pieceToMoveColor)
                         return false;
                     } else if(!currentSquare.classList.contains('emptySquare') && counter !== squareToCheckRow) {
                         return false;
