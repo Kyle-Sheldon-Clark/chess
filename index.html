@@ -319,7 +319,7 @@
                     counterIncrement = 1;
                     counter = originalSquareRow;
                 }
-                 while (counter !== squareToCheckRow + counterIncrement) {
+                while (counter !== squareToCheckRow + counterIncrement) {
                     let currentSquare = document.getElementById(`${counter}-${originalSquareColumn}`);
                     if (currentSquare.classList.contains(pieceToMoveColor)) {
                         return false;
@@ -344,9 +344,40 @@
 
             let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
 
-            if ( Math.abs(squareToCheckRow - originalSquareRow) === Math.abs(squareToCheckColumn - originalSquareColumn)) {
-                return true;
+            if (Math.abs(squareToCheckRow - originalSquareRow) !== Math.abs(squareToCheckColumn - originalSquareColumn)) {
+                return false;
             }
+
+            let rowCounter = originalSquareRow;
+            let columnCounter = originalSquareColumn;
+            let rowCounterIncrement;
+            let columnCounterIncrement;
+
+            if (squareToCheckColumn < originalSquareColumn && squareToCheckRow < originalSquareRow) {
+                rowCounterIncrement = -1;
+                columnCounterIncrement = -1;
+            } else if (squareToCheckColumn > originalSquareColumn && squareToCheckRow > originalSquareRow) {
+                rowCounterIncrement = 1;
+                columnCounterIncrement = 1;
+            } else if (squareToCheckColumn > originalSquareColumn && squareToCheckRow < originalSquareRow) {
+                rowCounterIncrement = -1;
+                columnCounterIncrement = 1;
+            } else if (squareToCheckColumn < originalSquareColumn && squareToCheckRow > originalSquareRow) {
+                rowCounterIncrement = 1;
+                columnCounterIncrement = -1;
+            }
+
+            while (rowCounter !== squareToCheckRow + rowCounterIncrement) {
+                let currentSquare = document.getElementById(`${rowCounter}-${columnCounter}`);
+                if (currentSquare.classList.contains(pieceToMoveColor)) {
+                    return false;
+                } else if(!currentSquare.classList.contains('emptySquare') && rowCounter !== squareToCheckRow) {
+                    return false;
+                }
+                rowCounter = rowCounter + rowCounterIncrement;
+                columnCounter = columnCounter + columnCounterIncrement;
+            }
+            return true;
         }
 
         createBoard();
