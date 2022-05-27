@@ -162,6 +162,11 @@
         }
 
         function movePiece(square) {
+            if (square.classList.contains('blackPiece')) {
+                capturedByWhite.push(square.innerText);
+            } else if (square.classList.contains('whitePiece')) {
+                capturedByBlack.push(square.innerText);
+            }
             square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
             square.innerText = squareText;
             pieceToMove = '';
@@ -218,7 +223,6 @@
                 } else if (Math.abs(originalSquareColumn - squareToCheckColumn) === 1 && squareToCheckValue.contains('blackPiece')) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
-                    capturedByWhite.push('pawn');
                     return true;
                 }
             } else if (turn === 'black') {
@@ -229,7 +233,6 @@
                 } else if (Math.abs(originalSquareColumn - squareToCheckColumn) === 1 && squareToCheckValue.contains('whitePiece')) {
                     pawn.position = squareToCheck.id;
                     pawn.move++;
-                    capturedByBlack.push('pawn');
                     return true;
                 }
             }
@@ -256,18 +259,8 @@
             }
 
             if (Math.abs(originalSquareRow - squareToCheckRow) === 2 && Math.abs(originalSquareColumn - squareToCheckColumn) === 1 && !squareToCheckValue.contains(pieceColor)) {
-                if (squareToCheckValue.contains('blackPiece')) {
-                    capturedByWhite.push('knight');
-                } else {
-                    capturedByBlack.push('knight');
-                }
                 return true;
             } else if (Math.abs(originalSquareRow - squareToCheckRow) === 1 && Math.abs(originalSquareColumn - squareToCheckColumn) === 2 && !squareToCheckValue.contains(pieceColor)) {
-                if (squareToCheckValue.contains('blackPiece')) {
-                    capturedByWhite.push('knight');
-                } else {
-                    capturedByBlack.push('knight');
-                }
                 return true;
             }
         }
