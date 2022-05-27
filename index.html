@@ -337,6 +337,10 @@
 
             let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
 
+            if (originalSquare === squareToCheck.id) {
+                return true;
+            }
+            
             if (Math.abs(squareToCheckRow - originalSquareRow) !== Math.abs(squareToCheckColumn - originalSquareColumn)) {
                 return false;
             }
