@@ -100,6 +100,8 @@
                 movePiece(square);
             } else if (pieceToMove === 'bishop' && validBishopMove(square)) {
                 movePiece(square);
+            } else if (pieceToMove === 'queen' && validQueenMove(square)) {
+                movePiece(square);
             } else if (pieceToMove === '') {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
                     square.classList.add('emptySquare');
@@ -136,6 +138,7 @@
                     squareText = square.innerText;
                     square.innerText = '';
                     pieceToMove = 'queen';
+                    originalSquare = square.id;
                 } else if (square.classList.contains('king')) {
                     square.classList.remove('king');
                     squareText = square.innerText;
@@ -340,7 +343,7 @@
             if (originalSquare === squareToCheck.id) {
                 return true;
             }
-            
+
             if (Math.abs(squareToCheckRow - originalSquareRow) !== Math.abs(squareToCheckColumn - originalSquareColumn)) {
                 return false;
             }
@@ -375,6 +378,64 @@
                 columnCounter = columnCounter + columnCounterIncrement;
             }
             return true;
+        }
+
+        function validQueenMove(squareToCheck) {
+            let originalSquareId = originalSquare.split('-');
+            let originalSquareRow = parseInt(originalSquareId[0]);
+            let originalSquareColumn = parseInt(originalSquareId[1]);
+            
+            let squareToCheckId = squareToCheck.id.split('-');
+            let squareToCheckRow = parseInt(squareToCheckId[0]);
+            let squareToCheckColumn = parseInt(squareToCheckId[1]);
+
+            let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
+
+            if (originalSquare === squareToCheck.id) {
+                return true;
+            }
+
+            let counter;
+            let counterIncrement;
+            if (squareToCheckRow === originalSquareRow) {
+                if (originalSquareColumn > squareToCheckColumn) {
+                    counterIncrement = -1;
+                    counter = originalSquareColumn;
+                } else if (originalSquareColumn < squareToCheckColumn) {
+                    counterIncrement = 1;
+                    counter = originalSquareColumn;
+                }
+                while (counter !== squareToCheckColumn + counterIncrement) {
+                    let currentSquare = document.getElementById(`${originalSquareRow}-${counter}`);
+                    if (currentSquare.classList.contains(pieceToMoveColor)) {
+                        return false;
+                    } else if(!currentSquare.classList.contains('emptySquare') && counter !== squareToCheckColumn) {
+                        return false;
+                    }
+                    counter = counter+counterIncrement;
+                }
+
+                return true;
+            } else if (originalSquareColumn === squareToCheckColumn) {
+                if (originalSquareRow > squareToCheckRow) {
+                    counterIncrement = -1;
+                    counter = originalSquareRow;
+                } else if (originalSquareRow < squareToCheckRow) {
+                    counterIncrement = 1;
+                    counter = originalSquareRow;
+                }
+                while (counter !== squareToCheckRow + counterIncrement) {
+                    let currentSquare = document.getElementById(`${counter}-${originalSquareColumn}`);
+                    if (currentSquare.classList.contains(pieceToMoveColor)) {
+                        return false;
+                    } else if(!currentSquare.classList.contains('emptySquare') && counter !== squareToCheckRow) {
+                        return false;
+                    }
+                    counter = counter+counterIncrement;
+                }
+
+                return true;
+            }
         }
 
         createBoard();
