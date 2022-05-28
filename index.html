@@ -395,6 +395,10 @@
                 return true;
             }
 
+            if (Math.abs(squareToCheckRow - originalSquareRow) !== Math.abs(squareToCheckColumn - originalSquareColumn) && (squareToCheckColumn !== originalSquareColumn && squareToCheckRow !== originalSquareRow)) {
+                return false;
+            }
+
             let counter;
             let counterIncrement;
             if (squareToCheckRow === originalSquareRow) {
@@ -434,6 +438,37 @@
                     counter = counter+counterIncrement;
                 }
 
+                return true;
+            }  else {
+                let rowCounter = originalSquareRow;
+                let columnCounter = originalSquareColumn;
+                let rowCounterIncrement;
+                let columnCounterIncrement;
+
+                if (squareToCheckColumn < originalSquareColumn && squareToCheckRow < originalSquareRow) {
+                    rowCounterIncrement = -1;
+                    columnCounterIncrement = -1;
+                } else if (squareToCheckColumn > originalSquareColumn && squareToCheckRow > originalSquareRow) {
+                    rowCounterIncrement = 1;
+                    columnCounterIncrement = 1;
+                } else if (squareToCheckColumn > originalSquareColumn && squareToCheckRow < originalSquareRow) {
+                    rowCounterIncrement = -1;
+                    columnCounterIncrement = 1;
+                } else if (squareToCheckColumn < originalSquareColumn && squareToCheckRow > originalSquareRow) {
+                    rowCounterIncrement = 1;
+                    columnCounterIncrement = -1;
+                }
+
+                while (rowCounter !== squareToCheckRow + rowCounterIncrement) {
+                    let currentSquare = document.getElementById(`${rowCounter}-${columnCounter}`);
+                    if (currentSquare.classList.contains(pieceToMoveColor)) {
+                        return false;
+                    } else if(!currentSquare.classList.contains('emptySquare') && rowCounter !== squareToCheckRow) {
+                        return false;
+                    }
+                    rowCounter = rowCounter + rowCounterIncrement;
+                    columnCounter = columnCounter + columnCounterIncrement;
+                }
                 return true;
             }
         }
