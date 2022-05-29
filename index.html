@@ -102,6 +102,8 @@
                 movePiece(square);
             } else if (pieceToMove === 'queen' && validQueenMove(square)) {
                 movePiece(square);
+            } else if (pieceToMove === 'king' && validKingMove(square)) {
+                movePiece(square);
             } else if (pieceToMove === '') {
                 if (square.classList.contains('whitePiece') && turn === 'white') {
                     square.classList.add('emptySquare');
@@ -144,6 +146,7 @@
                     squareText = square.innerText;
                     square.innerText = '';
                     pieceToMove = 'king';
+                    originalSquare = square.id;
                 } else if (square.classList.contains('pawn')) {
                     square.classList.remove('pawn');
                     squareText = square.innerText;
@@ -469,6 +472,22 @@
                     rowCounter = rowCounter + rowCounterIncrement;
                     columnCounter = columnCounter + columnCounterIncrement;
                 }
+                return true;
+            }
+        }
+
+        function validKingMove(squareToCheck) {
+            let originalSquareId = originalSquare.split('-');
+            let originalSquareRow = parseInt(originalSquareId[0]);
+            let originalSquareColumn = parseInt(originalSquareId[1]);
+            
+            let squareToCheckId = squareToCheck.id.split('-');
+            let squareToCheckRow = parseInt(squareToCheckId[0]);
+            let squareToCheckColumn = parseInt(squareToCheckId[1]);
+
+            let squareToCheckValue = document.getElementById(squareToCheck.id).classList;
+
+            if (Math.abs(originalSquareRow - squareToCheckRow) <= 1 && Math.abs(originalSquareColumn - squareToCheckColumn) <= 1) {
                 return true;
             }
         }
