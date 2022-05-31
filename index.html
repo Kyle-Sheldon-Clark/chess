@@ -12,8 +12,8 @@
 
     </div>
     <div id="score">
-        <p id="takenByBlack"></p>
-        <p id="takenByWhite"></p>
+        <p id="takenByBlack">Pieces captured:</p>
+        <p id="takenByWhite">Pieces captured:</p>
     </div>
     <script>
         let pieces = [];
@@ -174,8 +174,10 @@
         function movePiece(square) {
             if (square.classList.contains('blackPiece')) {
                 capturedByWhite.push(square.innerText);
+                document.getElementById('takenByWhite').innerText = `Pieces captured: ${capturedByWhite}`;
             } else if (square.classList.contains('whitePiece')) {
                 capturedByBlack.push(square.innerText);
+                document.getElementById('takenByBlack').innerText = `Pieces captured: ${capturedByBlack}`;
             }
             square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
             square.innerText = squareText;
