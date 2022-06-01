@@ -94,6 +94,20 @@
             }
         }
 
+        function isGameOver() {
+            for (let i = 0; i < capturedByWhite.length; i++) {
+                if (capturedByWhite[i] === 'K') {
+                    return true;
+                }
+            }
+            for (let j = 0; j < capturedByBlack.length; j++) {
+                if (capturedByBlack[i] === 'K') {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         function handleClick(square) {
             
             if (pieceToMove === 'pawn' && validPawnMove(square)) {
@@ -181,6 +195,10 @@
             }
             square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
             square.innerText = squareText;
+            if (isGameOver()) {
+                document.getElementById('takenByWhite').innerText = 'Game Over!';
+                document.getElementById('takenByBlack').innerText = 'Game Over!';
+            }
             pieceToMove = '';
             pieceToMoveColor = '';
             squareText = '';
