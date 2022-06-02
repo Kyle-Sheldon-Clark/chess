@@ -101,11 +101,22 @@
                 }
             }
             for (let j = 0; j < capturedByBlack.length; j++) {
-                if (capturedByBlack[i] === 'K') {
+                if (capturedByBlack[j] === 'K') {
                     return true;
                 }
             }
             return false;
+        }
+
+        function endGame() {
+            document.getElementById('takenByWhite').innerText = 'Game Over!';
+            document.getElementById('takenByBlack').innerText = 'Game Over!';
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 8; j++) {
+                    let square = document.getElementById(`${i}-${j}`);
+                    square.style.backgroundColor = 'red';
+                }
+            }
         }
 
         function handleClick(square) {
@@ -196,8 +207,7 @@
             square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
             square.innerText = squareText;
             if (isGameOver()) {
-                document.getElementById('takenByWhite').innerText = 'Game Over!';
-                document.getElementById('takenByBlack').innerText = 'Game Over!';
+                endGame();
             }
             pieceToMove = '';
             pieceToMoveColor = '';
