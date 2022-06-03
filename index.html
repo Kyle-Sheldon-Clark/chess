@@ -107,14 +107,67 @@
             }
             return false;
         }
+        
+        function resetBoard() {
+            turn = 'white';
+            capturedByWhite = [];
+            capturedByBlack = [];
+            round = 1;
+            let blackSquare = false;
 
-        function endGame() {
-            document.getElementById('takenByWhite').innerText = 'Game Over!';
-            document.getElementById('takenByBlack').innerText = 'Game Over!';
+            document.getElementById('takenByBlack').innerText = 'Pieces captured:';
+            document.getElementById('takenByWhite').innerText = 'Pieces captured:';
+
             for (let i = 0; i < 8; i++) {
                 for (let j = 0; j < 8; j++) {
                     let square = document.getElementById(`${i}-${j}`);
-                    square.style.backgroundColor = 'red';
+
+                    square.classList = 'square';
+                    square.innerText = '';
+
+                    if (blackSquare) {
+                        square.style.backgroundColor = 'rgba(99,65,51,0.8)';
+                        blackSquare = false;
+                    } else {
+                        blackSquare = true;
+                    }
+
+                    if (i === 0 || i === 1) {
+                        square.classList.add('blackPiece');
+                        pieceColor = 'black';
+                    } else if (i === 6 || i === 7) {
+                        square.classList.add('whitePiece');
+                        pieceColor = 'white';
+                    }
+
+                    if ((i === 0 || i === 7) && (j === 0 || j === 7))  {
+                        square.classList.add('rook');
+                        square.innerText = 'R';
+                        pieceType = 'rook';
+                    } else if ((i === 0 || i === 7) && (j === 1 || j === 6))  {
+                        square.classList.add('knight');
+                        square.innerText = 'N';
+                        pieceType = 'knight';
+                    } else if ((i === 0 || i === 7) && (j === 2 || j === 5))  {
+                        square.classList.add('bishop');
+                        square.innerText = 'B';
+                        pieceType = 'bishop';
+                    } else if ((i === 0 || i === 7) && j === 3)  {
+                        square.classList.add('queen');
+                        square.innerText = 'Q';
+                        pieceType = 'queen';
+                    } else if ((i === 0 || i === 7) && j === 4)  {
+                        square.classList.add('king');
+                        square.innerText = 'K';
+                        pieceType = 'king';
+                    } else if (i === 1 || i === 6) {
+                        square.classList.add('pawn');
+                        square.innerText = 'p';
+                        pieceType = 'pawn';
+                    } else {
+                        square.classList.add('emptySquare');
+                    }
+                    blackSquare = !blackSquare;
                 }
             }
         }
@@ -206,9 +259,6 @@
             }
             square.classList = `square ${pieceToMove} ${pieceToMoveColor}`;
             square.innerText = squareText;
-            if (isGameOver()) {
-                endGame();
-            }
             pieceToMove = '';
             pieceToMoveColor = '';
             squareText = '';
@@ -219,6 +269,9 @@
                     turn = 'white';
                     round++;
                 }
+            }
+            if (isGameOver()) {
+                resetBoard();
             }
         }
 
