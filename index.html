@@ -119,6 +119,10 @@
             document.getElementById('takenByBlack').innerText = 'Pieces captured:';
             document.getElementById('takenByWhite').innerText = 'Pieces captured:';
 
+            for (let k = 0; k < pieces.length; k++) {
+                pieces[k].move = 0;
+            }
+
             for (let i = 0; i < 8; i++) {
                 for (let j = 0; j < 8; j++) {
                     let square = document.getElementById(`${i}-${j}`);
@@ -278,6 +282,7 @@
 
         function validPawnMove(squareToCheck) {
             let pawn = pieces.find(obj => {
+                console.log(obj.position === originalSquare)
                 return obj.position === originalSquare;
             });
 
