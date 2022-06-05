@@ -119,8 +119,26 @@
             document.getElementById('takenByBlack').innerText = 'Pieces captured:';
             document.getElementById('takenByWhite').innerText = 'Pieces captured:';
 
+            let rowCounter = 0;
+            let columnCounter = 0;
+
             for (let k = 0; k < pieces.length; k++) {
                 pieces[k].move = 0;
+                pieces[k].position = `${rowCounter}-${columnCounter}`;
+                columnCounter++;
+                if (k === 7) {
+                    columnCounter = 0;
+                    rowCounter++;
+                }
+                if (k === 15) {
+                    columnCounter = 0;
+                    rowCounter = 6;
+                }
+                if (k === 23) {
+                    columnCounter = 0;
+                    rowCounter++;
+                }
+
             }
 
             for (let i = 0; i < 8; i++) {
@@ -282,7 +300,6 @@
 
         function validPawnMove(squareToCheck) {
             let pawn = pieces.find(obj => {
-                console.log(obj.position === originalSquare)
                 return obj.position === originalSquare;
             });
 
