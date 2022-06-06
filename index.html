@@ -8,14 +8,14 @@
     <title>Chess</title>
 </head>
 <body>
-    <button onclick="resetBoard()" id="reset">Restart Game</button>
-    <div id="board">
-
-    </div>
-    <div id="score">
+    <div id="game">
         <p id="takenByBlack">Pieces captured:</p>
+        <div id="board">
+
+        </div>
         <p id="takenByWhite">Pieces captured:</p>
     </div>
+    <button onclick="resetBoard()" id="reset">New Game</button>
     <script>
         let pieces = [];
         let capturedByBlack = [];
