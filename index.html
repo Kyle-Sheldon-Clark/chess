@@ -16,6 +16,7 @@
         <p id="takenByWhite">Pieces captured:</p>
     </div>
     <button onclick="resetBoard()" id="reset">New Game</button>
+    <p id="score">White 0 - 0 Black </p>
     <script>
         let pieces = [];
         let capturedByBlack = [];
@@ -27,6 +28,9 @@
         let turn = 'white';
         let round = 1;
         let originalSquare;
+
+        let whiteWins = 0;
+        let blackWins = 0;
 
         function createBoard() {
             let blackSquare = false;
@@ -294,6 +298,12 @@
                 }
             }
             if (isGameOver()) {
+                if (turn === 'black') {
+                    whiteWins++;
+                } else {
+                    blackWins++;
+                }
+                document.getElementById('score').innerText = `White ${whiteWins} - ${blackWins} Black`;
                 resetBoard();
             }
         }
