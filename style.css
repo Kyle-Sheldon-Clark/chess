@@ -62,7 +62,6 @@ body {
 
 .whitePiece {
     color: white;
-    text-shadow: 1px 1px black, -1px -1px black;
     font-weight: 700;
     font-size: 5vh;
     display: flex;
