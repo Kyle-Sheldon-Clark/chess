@@ -15,8 +15,10 @@
         </div>
         <p id="takenByWhite">Pieces captured:</p>
     </div>
-    <button onclick="resetBoard()" id="reset">New Game</button>
-    <p id="score">White 0 - 0 Black </p>
+    <div id="gameInformation">
+        <p id="score">White 0 - 0 Black </p>
+        <button onclick="resetBoard()" id="reset">New Game</button>
+    </div>
     <script>
         let pieces = [];
         let capturedByBlack = [];

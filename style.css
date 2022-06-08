@@ -11,15 +11,6 @@ body {
     height: 100vh;
 }
 
-#reset {
-    width: 8vw;
-    background-color: rgb(184,111,82);
-    padding: 1.5vh;
-    border-radius: 8px;
-    font-weight: 700;
-    border: none;
-}
-
 #game {
     display: flex;
     align-items: flex-start;
@@ -69,7 +60,24 @@ body {
     align-items: center;
 }
 
+#gameInformation {
+    width: 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 #score {
     color: rgba(255,255,255,0.7);
-    margin-left: 2vw;
+    padding-bottom: 5vh;
+}
+
+#reset {
+    width: 8vw;
+    background-color: rgb(184,111,82);
+    padding: 1.5vh;
+    border-radius: 8px;
+    font-weight: 700;
+    border: none;
 }
